@@ -1,6 +1,9 @@
-# Requirements
+# Set up
+
+* create an auth.cfg containing VPN username on first line, password on second
+* edit/replace server.ovpn
 
 # Run
 
-docker build -t torrenter .
-docker run -t -i --privileged -v /home/anderssv/source/docker-torrenter:/config torrenter /bin/bash
+```./run.sh url/magnet```
+
