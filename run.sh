@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 
 [ -d /dev/net ] || mkdir -p /dev/net
 [ -c /dev/net/tun ] || mknod /dev/net/tun c 10 200
@@ -6,9 +6,15 @@
 echo "Initiating OpenVPN connection"
 openvpn --writepid /var/run/openvpn.pid --daemon --status /var/run/openvpn.status 10 --cd /config --config /config/server.ovpn
 
+sleep 5s
+if [[ ! $(ifconfig | grep tun0) ]]; then
+	echo "ERROR: VPN not connected!!!"
+	exit 1
+fi
+
 echo "Starting Transmission download"
 
-transmission-cli -f /shutdown.sh magnet:?xt=urn:btih:9bc21e6a74f20f9fedd55419417753838d4036cd&dn=Elementary+S02E22+HDTV+x264-LOL+%5Beztv%5D&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&tr=udp%3A%2F%2Ftracker.publicbt.com%3A80&tr=udp%3A%2F%2Ftracker.istole.it%3A6969&tr=udp%3A%2F%2Ftracker-ccc.de%3A6969&tr=udp%3A%2F%2Fopen.demonii.com%3A1337
+transmission-cli -f /shutdown.sh $@
 
 sleep 5s
 
