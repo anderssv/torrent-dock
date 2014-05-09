@@ -4,9 +4,12 @@
 [ -c /dev/net/tun ] || mknod /dev/net/tun c 10 200
 
 echo "Initiating OpenVPN connection"
-openvpn --writepid /var/run/openvpn.pid --daemon --status /var/run/openvpn.status 10 --cd /config --config /config/server.ovpn
+openvpn --writepid /var/run/openvpn.pid --daemon --status /var/run/openvpn.status 10 --cd /config/vpn --config /config/vpn/server.ovpn
 
-sleep 5s
+echo "Waiting for VPN connection..."
+sleep 10s
+# TODO loop and wait, not just random seconds
+
 if [[ ! $(ifconfig | grep tun0) ]]; then
 	echo "ERROR: VPN not connected!!!"
 	exit 1
@@ -14,7 +17,7 @@ fi
 
 echo "Starting Transmission download"
 
-transmission-cli -f /shutdown.sh $@
+transmission-cli --config-dir /config/transmission --finish /shutdown.sh --download-dir /download $@
 
 sleep 5s
 
