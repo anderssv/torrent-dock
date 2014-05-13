@@ -17,7 +17,11 @@ fi
 
 echo "Starting Transmission download"
 
-transmission-cli --config-dir /config/transmission --finish /shutdown.sh --download-dir /download $@
+TRANSMISSION_HOME=/tmp/transmission-home
+
+mkdir -p $TRANSMISSION_HOME
+cp /config/transmission/settings.json $TRANSMISSION_HOME
+transmission-cli --config-dir $TRANSMISSION_HOME --finish /shutdown.sh --download-dir /download $@
 
 sleep 5s
 
