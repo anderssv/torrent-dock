@@ -6,9 +6,15 @@ Based on files at [https://github.com/firecat53/dockerfiles](https://github.com/
 
 Pretty basic, so little error checking and stupid sleeps to enable VPN connections to be made.
 
+# Prepare
+
+If you're on a Ubuntu system, the nameserver will probably be set to ```127.0.0.1```. Check your ```/etc/resolv.conf``` to see if this applies.
+
+Details and a solution can be [found here](http://docs.docker.com/installation/ubuntulinux/#docker-and-local-dns-server-warnings).
+
 # Build
 
-Firs you need to build the Docker image that will be used. Do this with the ```./build.sh``` command.
+First you need to build the Docker image that will be used. Do this with the ```./build.sh``` command.
 
 # Set up
 

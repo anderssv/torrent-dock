@@ -15,4 +15,4 @@ fi
 # any files created will be owned by root. 
 chmod g+s $DOWNLOAD_FOLDER
 
-docker run -t -i --privileged --dns 8.8.8.8 -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter $@
+docker run -t -i --privileged -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter $@
