@@ -18,7 +18,7 @@ First you need to build the Docker image that will be used. Do this with the ```
 
 # Set up
 
-* create an auth.cfg containing VPN username on first line, password on second
+* create an ```./vpn/auth.cfg``` containing VPN username on first line, password on second
 * edit/replace server.ovpn
 
 The server.ovpn that is checked in with this source is for Hide My Ass, Sweden.
