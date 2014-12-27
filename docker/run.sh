@@ -20,17 +20,37 @@ if [[ ! $(ifconfig | grep tun0) ]]; then
 	exit 1
 fi
 
-echo "Starting Transmission download"
+echo "Starting Transmission daemon"
 
-TRANSMISSION_HOME=/tmp/transmission-home
+# Set up settings and user
+cp /config/transmission/settings.json /etc/transmission-daemon/settings.json
+cp /config/transmission/transmission-daemon.conf /etc/init/transmission-daemon.conf
+cp /config/transmission/transmission-daemon.init /etc/init.d/transmission-daemon
 
-mkdir -p $TRANSMISSION_HOME
-cp /config/transmission/settings.json $TRANSMISSION_HOME
-transmission-cli --config-dir $TRANSMISSION_HOME --finish /shutdown.sh --download-dir /download $@
+# Start
+service transmission-daemon start
+sleep 5s
+transmission-remote --torrent-done-script /shutdown.sh
+
+echo "Transmission started should addresses:"
+echo "$(ifconfig | grep inet)"
+
+echo "Adding torrent"
+transmission-remote -a $@
+
+if [[ -e /config/transmission/trackers.conf ]]; then
+	for tracker in $(cat /config/transmission/trackers.conf | grep -v \#); do
+		transmission-remote -t 1 -td $tracker
+		echo "Added $tracker as tracker"
+	done
+fi
 
 sleep 5s
 
-while [ $(pgrep transmission) ]; do
+# Enter a bash session if you need to debug
+# bash
+
+while [[ $(pgrep transmission) ]]; do
 	sleep 5s
 done
 
