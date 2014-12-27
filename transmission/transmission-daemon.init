@@ -12,6 +12,7 @@ NAME=transmission-daemon
 DAEMON=/usr/bin/$NAME
 USER=root
 STOP_TIMEOUT=30
+OPTIONS="$OPTIONS --logfile /var/log/transmission.log"
 
 export PATH="${PATH:+$PATH:}/sbin"
 
