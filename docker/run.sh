@@ -51,6 +51,8 @@ sleep 5s
 # bash
 
 while [[ $(pgrep transmission) ]]; do
+	clear
+	transmission-remote -l
 	sleep 5s
 done
 
