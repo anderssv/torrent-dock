@@ -1,4 +1,4 @@
 #!/bin/bash
 
-kill $(pgrep transmission)
-
+pgrep transmission | xargs kill
+pgrep openvpn | xargs kill

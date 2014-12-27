@@ -52,8 +52,10 @@ sleep 5s
 
 while [[ $(pgrep transmission) ]]; do
 	clear
+	echo "Transmission web is available at http://$(ifconfig | grep 'inet addr' | grep 172.17 | cut -c21- | cut -f1 -d ' '):9091"
+	echo ""
 	transmission-remote -l
-	sleep 5s
+	sleep 1s
 done
 
 echo "Transmission died, cleaning up!"
