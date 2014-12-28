@@ -23,9 +23,12 @@ First you need to build the Docker image that will be used. Do this with the ```
 
 The server.ovpn that is checked in with this source is for Hide My Ass, Sweden.
 
+## Adding extra trackers
+Create a ```transmission/trackers.conf``` with one tracker per line. These will be added to all torrents added to Transmission.
+
 # Run
 
-```./run.sh <url/magnet>```
+```./start.sh <url/magnet>``` for fetching a specific torrent. You can also pass a file containing multiple torrents. Just keep one on each line.
 
 # Feed fetching
 
