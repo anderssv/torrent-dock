@@ -1,7 +1,6 @@
-#! /bin/bash -eu
+#!/bin/bash -eu
 
 links="$(curl $(cat rss.url) | grep -o '<link>[^<]*' | cut -c 7-)"
-
 tempfile=$(mktemp --tmpdir torrent_scan.XXXXXX)
 
 for link in $links; do
