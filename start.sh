@@ -15,4 +15,14 @@ fi
 # any files created will be owned by root. 
 chmod g+s $DOWNLOAD_FOLDER
 
-docker run -t -i --privileged -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter $@
+download_list=$DOWNLOAD_FOLDER/torrent_download.list
+
+if [[ ! -e $1 ]]; then
+	echo "$1" > $download_list
+else
+	cp $1 $download_list
+fi
+
+docker run -t -i --privileged -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter
+
+rm $download_list

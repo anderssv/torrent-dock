@@ -1,5 +1,9 @@
 #! /bin/bash
 
+function webAddress() {
+	echo "http://$(ifconfig | grep 'inet addr' | grep 172.17 | cut -c21- | cut -f1 -d ' '):9091"
+}
+
 [ -d /dev/net ] || mkdir -p /dev/net
 [ -c /dev/net/tun ] || mknod /dev/net/tun c 10 200
 
@@ -29,19 +33,24 @@ cp /config/transmission/transmission-daemon.init /etc/init.d/transmission-daemon
 
 # Start
 service transmission-daemon start
+echo "Transmission started. Web available at: $(webAddress)"
+
 sleep 5s
-transmission-remote --torrent-done-script /shutdown.sh
 
-echo "Transmission started should addresses:"
-echo "$(ifconfig | grep inet)"
+torrent_file="/download/torrent_download.list"
+num_torrents=$(cat $torrent_file | wc -l)
 
-echo "Adding torrent"
-transmission-remote -a $@
+echo "Adding $num_torrents torrents"
+for torrent in $(cat /download/torrent_download.list); do
+	transmission-remote -a $torrent
+done
 
 if [[ -e /config/transmission/trackers.conf ]]; then
-	for tracker in $(cat /config/transmission/trackers.conf | grep -v \#); do
-		transmission-remote -t 1 -td $tracker
-		echo "Added $tracker as tracker"
+	for ((ctr=1; ctr <= $num_torrents; ctr++ )); do
+		for tracker in $(cat /config/transmission/trackers.conf | grep -v \#); do
+			transmission-remote -t $ctr -td $tracker
+			echo "Added $tracker as tracker"
+		done
 	done
 fi
 
@@ -52,10 +61,12 @@ sleep 5s
 
 while [[ $(pgrep transmission) ]]; do
 	clear
-	echo "Transmission web is available at http://$(ifconfig | grep 'inet addr' | grep 172.17 | cut -c21- | cut -f1 -d ' '):9091"
+	echo "Transmission web is available at $(webAddress)"
 	echo ""
 	transmission-remote -l
 	sleep 1s
 done
 
 echo "Transmission died, cleaning up!"
+
+exit 0
