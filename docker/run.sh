@@ -13,6 +13,7 @@ function addTorrents() {
 	done
 
 	if [[ -e /config/transmission/trackers.conf ]]; then
+		# TODO This adds to all torrents again, so should probably find a way to only add to the new ones
 		for torrent_id in $(transmission-remote -l | tr -s ' ' | grep -o '^[ ]*[0-9]\{1,3\}'); do
 			for tracker in $(cat /config/transmission/trackers.conf | grep -v \#); do
 				transmission-remote -t $torrent_id -td $tracker
