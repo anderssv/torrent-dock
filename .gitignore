@@ -1,5 +1,4 @@
 auth.cfg
 *.txt
 rss.url
-*.template
 transmission/trackers.conf

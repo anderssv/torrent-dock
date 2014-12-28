@@ -1,0 +1,11 @@
+# Trackers that gets added to all downloads
+# 
+# Copy this file to trackers.conf to activate, and edit to your liking.
+# 
+# This shouldn't really be necessary, but in the case of lots of dead
+# trackers on your torrent, it might be a good idea to add someone you know
+# works.
+# 
+udp://tracker.leechers-paradise.org:6969
+udp://9.rarbg.com:2710
+http://tracker.trackerfix.com:80
