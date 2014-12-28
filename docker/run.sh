@@ -38,7 +38,7 @@ echo "Transmission started. Web available at: $(webAddress)"
 sleep 5s
 
 torrent_file="/download/torrent_download.list"
-num_torrents=$(cat $torrent_file | wc -l)
+num_torrents=$(cat $torrent_file | sed '/^$/d' | wc -l)
 
 echo "Adding $num_torrents torrents"
 for torrent in $(cat /download/torrent_download.list); do
@@ -49,7 +49,7 @@ if [[ -e /config/transmission/trackers.conf ]]; then
 	for ((ctr=1; ctr <= $num_torrents; ctr++ )); do
 		for tracker in $(cat /config/transmission/trackers.conf | grep -v \#); do
 			transmission-remote -t $ctr -td $tracker
-			echo "Added $tracker as tracker"
+			echo "Added $tracker as tracker to torrent $ctr"
 		done
 	done
 fi
