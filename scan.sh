@@ -16,6 +16,8 @@ done
 
 if [[ $(cat $tempfile | wc -l) -gt 0 ]]; then
 	./start.sh $tempfile "$HOME/Downloads/torrent_auto"
+elif [[ -e "torrents.list" ]]; then
+	./start.sh torrents.list
 fi
 
 cat $tempfile >> $downloaded_file
