@@ -1,7 +1,7 @@
 #! /bin/bash
 
 function webAddress() {
-	echo "http://$(ifconfig | grep 'inet addr' | grep 172.17 | cut -c21- | cut -f1 -d ' '):9091"
+	echo "http://$(awk 'END{print $1}' /etc/hosts):9091"
 }
 
 function addTorrents() {
@@ -38,7 +38,7 @@ echo "Waiting for VPN connection..."
 sleep 10s
 # TODO loop and wait, not just random seconds
 
-if [[ ! $(ifconfig | grep tun0) ]]; then
+if [[ ! $(ip addr | grep tun0) ]]; then
 	echo "ERROR: VPN not connected!!!"
 	exit 1
 fi

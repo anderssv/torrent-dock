@@ -1,11 +1,11 @@
-FROM ubuntu:saucy
+FROM ubuntu:yakkety
 
 MAINTAINER Anders Sveen <anders@f12.no>
 
-RUN apt-get -q update && apt-get install -qy --force-yes unzip software-properties-common && apt-get -qy --force-yes upgrade
+RUN apt -q update && apt -qy upgrade && apt install -qy unzip software-properties-common 
 
-RUN apt-get install -qy --force-yes openvpn
-RUN apt-get install -qy --force-yes transmission-daemon transmission-remote-cli
+RUN apt install -qy openvpn
+RUN apt install -qy transmission-daemon transmission-remote-cli
 
 ADD run.sh /run.sh
 ADD shutdown.sh /shutdown.sh

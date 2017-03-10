@@ -23,6 +23,6 @@ else
 	cp $1 $download_list
 fi
 
-docker run -t -i --privileged -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter
+docker run -t -i --privileged --dns=8.8.8.8 -v $(pwd):/config -v $DOWNLOAD_FOLDER:/download torrenter
 
 rm $download_list
