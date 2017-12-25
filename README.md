@@ -1,6 +1,6 @@
 **WARNING:** Just rewrote everything, so it's quite different than it used to be.
 
-This setup uses (this docker image)[https://github.com/haugene/docker-transmission-openvpn] to launch
+This setup uses [https://github.com/haugene/docker-transmission-openvpn](this Docker image) to launch
 a Transmission web server to download torrents over VPN. The Docker image runs continuously, and can
 be accessed through a browser at http://<your_ip>:9190 .
 
