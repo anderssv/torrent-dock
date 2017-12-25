@@ -1,4 +1,3 @@
-auth.cfg
-*.txt
+env.sh
+downloaded.txt
 rss.url
-transmission/trackers.conf

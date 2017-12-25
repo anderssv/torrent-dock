@@ -1,35 +1,21 @@
-# Description
+**WARNING:** Just rewrote everything, so it's quite different than it used to be.
 
-Creates a Docker container for a torrent with a OpenVPN tunnel.
+This setup uses (this docker image)[https://github.com/haugene/docker-transmission-openvpn] to launch
+a Transmission web server to download torrents over VPN. The Docker image runs continuously, and can
+be accessed through a browser at http://<your_ip>:9190 .
 
-Based on files at [https://github.com/firecat53/dockerfiles](https://github.com/firecat53/dockerfiles).
+New torrents are added through transmission-remote commands when found.
 
-Pretty basic, so little error checking and stupid sleeps to enable VPN connections to be made.
+# Config
 
-# Prepare
+Copy env.sh.template to env.sh and modify for your settings. See the launch-transmission.sh script and 
+the docs for the haugane/docker-transmission-openvpn to figure out the options.
 
-If you're on a Ubuntu system, the nameserver will probably be set to ```127.0.0.1```. Check your ```/etc/resolv.conf``` to see if this applies.
+Add the RSS to scan for new links to a file called rss.url. I use https://showrss.info to generate mine.
 
-Details and a solution can be [found here](http://docs.docker.com/installation/ubuntulinux/#docker-and-local-dns-server-warnings).
+# Running
 
-# Build
+Run scan_loop.sh to start scanning (remember to start the Docker container before), and adding the 
+torrents from the Transmission server.
 
-First you need to build the Docker image that will be used. Do this with the ```./build.sh``` command.
-
-# Set up
-
-* create an ```./vpn/auth.cfg``` containing VPN username on first line, password on second
-* edit/replace server.ovpn
-
-The server.ovpn that is checked in with this source is for Hide My Ass, Sweden.
-
-## Adding extra trackers
-Create a ```transmission/trackers.conf``` with one tracker per line. These will be added to all torrents added to Transmission.
-
-# Run
-
-```./start.sh <url/magnet>``` for fetching a specific torrent. You can also pass a file containing multiple torrents. Just keep one on each line.
-
-# Feed fetching
-
-The ```scan.sh``` file can take an atom feed and download all links. Create a file called ```rss.url``` only containing the feed URL. It uses a simple text file to remember which links are already downloaded.
+Already downloaded torrents will be added to download.txt, so erase it to reset state.
