@@ -6,6 +6,7 @@ mkdir -p ${DOWNLOAD_FOLDER}/transmission-home
 cp remove_torrent.sh ${DOWNLOAD_FOLDER}/transmission-home/
 
 docker run --cap-add=NET_ADMIN --device=/dev/net/tun -d \
+              -v $(pwd)/scripts:/scripts \
               -v ${DOWNLOAD_FOLDER}:/data \
               -v /etc/localtime:/etc/localtime:ro \
               --dns 8.8.8.8 \
@@ -20,4 +21,6 @@ docker run --cap-add=NET_ADMIN --device=/dev/net/tun -d \
               -e "OPENVPN_PASSWORD=${VPN_PASSWORD}" \
               -e "LOCAL_NETWORK=${LOCAL_NETWORK}" \
               -p 9091:9091 \
-              haugene/transmission-openvpn
+              --restart unless-stopped \
+              --name transmission-vpn \
+              haugene/transmission-openvpn:2.7
