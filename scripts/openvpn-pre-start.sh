@@ -1,6 +1,6 @@
 #!/bin/bash -eu
 
-curl -o /etc/openvpn/nordvpn/se446.nordvpn.com.tcp443.ovpn https://downloads.nordcdn.com/configs/files/ovpn_legacy/servers/se446.nordvpn.com.tcp443.ovpn
+curl -o /etc/openvpn/nordvpn/se523.nordvpn.com.udp1194.ovpn https://downloads.nordcdn.com/configs/files/ovpn_legacy/servers/se523.nordvpn.com.udp1194.ovpn
 
 cd /etc/openvpn/nordvpn
 
